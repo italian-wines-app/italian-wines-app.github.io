@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e:*)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebSearch",
+      "Bash(curl:*)",
+      "WebFetch(domain:simplemaps.com)"
+    ]
+  }
+}
