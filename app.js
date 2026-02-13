@@ -5,6 +5,7 @@ let currentRegion = null;
 const winesContainer = document.getElementById('wines-container');
 const randomBtn = document.getElementById('random-btn');
 const regions = document.querySelectorAll('.region');
+const regionTooltip = document.getElementById('region-tooltip');
 
 // Initialize event listeners
 function init() {
@@ -12,6 +13,7 @@ function init() {
         region.addEventListener('click', handleRegionClick);
         region.addEventListener('mouseenter', handleRegionHover);
         region.addEventListener('mouseleave', handleRegionLeave);
+        region.addEventListener('mousemove', handleRegionMouseMove);
     });
 
     randomBtn.addEventListener('click', handleRandomDiscovery);
@@ -43,12 +45,28 @@ function handleRegionHover(event) {
     if (!event.target.classList.contains('active')) {
         event.target.style.opacity = '1';
     }
+    const regionId = event.target.dataset.region;
+    const regionData = wineData[regionId];
+    if (regionData) {
+        regionTooltip.textContent = regionData.name;
+        regionTooltip.style.opacity = '1';
+    }
 }
 
 function handleRegionLeave(event) {
     if (!event.target.classList.contains('active')) {
         event.target.style.opacity = '0.7';
     }
+    regionTooltip.style.opacity = '0';
+}
+
+function handleRegionMouseMove(event) {
+    const mapSection = event.target.closest('.map-section');
+    const rect = mapSection.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    regionTooltip.style.left = (x + 12) + 'px';
+    regionTooltip.style.top = (y - 10) + 'px';
 }
 
 // Clear current selection
